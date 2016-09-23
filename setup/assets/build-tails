@@ -1,0 +1,13 @@
+TAILS_DIR="/tails"
+BUILD_DIR="/build-tails"
+cd $TAILS
+lb clean --all
+mkdir -p $BUILD_DIR
+rsync -a $TAILS $BUILD_DIR
+cd $BUILD_DIR
+cd tails
+lb clean --all
+export http_proxy="http://apt-cache:3142"
+lb config --apt-http-proxy $http_proxy
+lb build
+mv -v tails-*.iso /tails/
