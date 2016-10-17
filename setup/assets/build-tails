@@ -7,7 +7,9 @@ rsync -a $TAILS $BUILD_DIR
 cd $BUILD_DIR
 cd tails
 lb clean --all
-export http_proxy="http://apt-cache:3142"
+export ftp_proxy="http://squid:3128"
+export http_proxy="http://squid:3128"
+export https_proxy="http://squid:3128"
 lb config --apt-http-proxy $http_proxy
 lb build
 mv -v tails-*.iso /tails/

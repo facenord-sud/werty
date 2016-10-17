@@ -4,11 +4,15 @@ ADD setup/ /usr/setup
 
 WORKDIR /usr/setup
 
+ENV http_proxy=http://172.17.0.2:3128 \
+    https_proxy=http://172.17.0.2:3128 \
+    ftp_proxy=http://172.17.0.2:3128
+
 RUN ./live-build.sh
 
 RUN http_proxy="" gpg --keyserver hkps.pool.sks-keyservers.net --recv-key C7988EA7A358D82E && gpg --export C7988EA7A358D82E | apt-key add -
 #RUN dockerhost=`ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $2 }'`
-RUN  echo "Acquire::http { Proxy \"http://172.17.0.2:3142\"; };" >> /etc/apt/apt.conf.d/01proxy
+RUN  echo "Acquire::http { Proxy \"http://172.17.0.3:3142\"; };" >> /etc/apt/apt.conf.d/01proxy
 
 
 RUN apt-get update
